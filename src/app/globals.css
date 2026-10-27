@@ -2,88 +2,196 @@
 
 @layer base {
   :root {
-    --background: #f8fafc;
-    --foreground: #0f172a;
-    --card: #ffffff;
-    --card-foreground: #0f172a;
-    --card-border: #e2e8f0;
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
-    --primary: #4f46e5;
-    --primary-foreground: #ffffff;
-    --accent: #8b5cf6;
-    --accent-glow: rgba(139, 92, 246, 0.15);
-  }
-
-  .dark {
-    --background: #090d16;
-    --foreground: #f8fafc;
-    --card: #111827;
-    --card-foreground: #f8fafc;
-    --card-border: #1f2937;
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
-    --primary: #6366f1;
-    --primary-foreground: #ffffff;
-    --accent: #a855f7;
-    --accent-glow: rgba(168, 85, 247, 0.25);
+    --canvas: #111211;
+    --surface: #1A1C1A;
+    --surface-elevated: #232622;
+    --border-subtle: #282C27;
+    --border-hover: #383F35;
+    --border-focus: #7E9F74;
+    --text-primary: #E1E3DA;
+    --text-muted: #8C9287;
+    --text-ghost: #585E54;
+    --accent-sage: #7E9F74;
+    --accent-terracotta: #B86E53;
+    --accent-amber: #D6A368;
+    --accent-fjord: #7CA3AC;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 }
 
-/* Custom shimmer animation for AI loading */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+/* ========================================================
+   Nordic Sanctuary Component Primitives & Utilities
+   ======================================================== */
+
+/* Tactile Button Feedback (Cushion Press) */
+.btn-tactile {
+  transition: transform 140ms cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 140ms ease,
+              border-color 140ms ease,
+              box-shadow 140ms ease;
+  will-change: transform;
+}
+
+.btn-tactile:active {
+  transform: scale(0.975);
+}
+
+/* Primary Action Button (Nordic Sage) */
+.btn-primary {
+  background-color: #7E9F74;
+  color: #111211;
+  font-weight: 500;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 140ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-primary:hover {
+  background-color: #8EB382;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.btn-primary:active {
+  background-color: #6F8E66;
+  transform: scale(0.98);
+}
+
+/* Secondary Button (Dark Moss & Soft Border) */
+.btn-secondary {
+  background-color: #1A1C1A;
+  border: 1px solid #282C27;
+  color: #E1E3DA;
+  border-radius: 10px;
+  transition: all 140ms ease;
+}
+
+.btn-secondary:hover {
+  background-color: #232622;
+  border-color: #383F35;
+  color: #FFFFFF;
+}
+
+.btn-secondary:active {
+  background-color: #181A18;
+  transform: scale(0.98);
+}
+
+/* Destructive Button (Muted Terracotta / Cedar) */
+.btn-destructive {
+  color: #C27466;
+  transition: all 140ms ease;
+}
+
+.btn-destructive:hover {
+  background-color: rgba(184, 110, 83, 0.12);
+  color: #E2887A;
+}
+
+.btn-destructive:active {
+  background-color: rgba(184, 110, 83, 0.22);
+  transform: scale(0.97);
+}
+
+/* Standard Nordic Input & Focus Ring */
+.input-nordic {
+  background-color: #1A1C1A;
+  border: 1px solid #282C27;
+  color: #E1E3DA;
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.input-nordic::placeholder {
+  color: #8C9287;
+  opacity: 0.8;
+}
+
+.input-nordic:focus {
+  border-color: #7E9F74;
+  box-shadow: 0 0 0 3px rgba(126, 159, 116, 0.22);
+}
+
+/* Task Row Styling with GPU-accelerated specular highlight */
+.task-row {
+  background-color: #1A1C1A;
+  border: 1px solid #282C27;
+  border-radius: 14px;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  transform: translateZ(0);
+}
+
+@media (hover: hover) {
+  .task-row:hover {
+    border-color: #383F35;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transform: translateY(-1px);
   }
 }
 
-.ai-shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(99, 102, 241, 0.05) 25%,
-    rgba(168, 85, 247, 0.2) 50%,
-    rgba(99, 102, 241, 0.05) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite ease-in-out;
-}
-
-/* Pulse glow for AI buttons */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(124, 58, 237, 0.35);
+/* Soft Motion: Organic Staggered Reveal */
+@keyframes gentleRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(2px);
   }
-  50% {
-    box-shadow: 0 0 25px rgba(124, 58, 237, 0.65);
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
-.ai-glow {
-  animation: pulseGlow 2.5s infinite;
+.animate-gentle-rise {
+  animation: gentleRise 340ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-/* Smooth custom scrollbars */
+/* Accessibility: Full Respect for Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* Manual Motion Reduction Class (toggled via settings) */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Quiet Dark Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: #282C27;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: #383F35;
 }

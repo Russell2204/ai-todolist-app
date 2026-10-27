@@ -10,44 +10,44 @@ export function ToastContainer() {
   if (toasts.length === 0) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
+    <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-3">
       {toasts.map((toast) => {
         const icons = {
-          success: <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />,
-          error: <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />,
-          warning: <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />,
-          info: <Info className="w-5 h-5 text-blue-400 shrink-0" />,
+          success: <CheckCircle2 className="w-4 h-4 text-[#7E9F74] shrink-0" />,
+          error: <AlertCircle className="w-4 h-4 text-[#B86E53] shrink-0" />,
+          warning: <AlertTriangle className="w-4 h-4 text-[#D6A368] shrink-0" />,
+          info: <Info className="w-4 h-4 text-[#7CA3AC] shrink-0" />,
         };
 
-        const bgStyles = {
-          success: 'bg-emerald-950/90 border-emerald-800 text-emerald-100',
-          error: 'bg-rose-950/90 border-rose-800 text-rose-100',
-          warning: 'bg-amber-950/90 border-amber-800 text-amber-100',
-          info: 'bg-slate-900/95 border-slate-750 text-slate-100',
+        const borders = {
+          success: 'border-l-4 border-l-[#7E9F74] border-t-[#2B2F2A] border-r-[#2B2F2A] border-b-[#2B2F2A]',
+          error: 'border-l-4 border-l-[#B86E53] border-t-[#2B2F2A] border-r-[#2B2F2A] border-b-[#2B2F2A]',
+          warning: 'border-l-4 border-l-[#D6A368] border-t-[#2B2F2A] border-r-[#2B2F2A] border-b-[#2B2F2A]',
+          info: 'border-l-4 border-l-[#7CA3AC] border-t-[#2B2F2A] border-r-[#2B2F2A] border-b-[#2B2F2A]',
         };
 
         return (
           <div
             key={toast.id}
-            className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-xl backdrop-blur-md transition-all duration-300 animate-in slide-in-from-bottom-5 ${
-              bgStyles[toast.type]
+            className={`pointer-events-auto flex items-start gap-3 p-3.5 rounded-xl border bg-[#232622] text-[#E1E3DA] shadow-xl transition-all duration-200 animate-gentle-rise ${
+              borders[toast.type]
             }`}
           >
             {icons[toast.type]}
-            <div className="flex-1 text-sm min-w-0">
-              <div className="font-semibold">{toast.title}</div>
+            <div className="flex-1 text-xs min-w-0">
+              <div className="font-medium text-[#E1E3DA]">{toast.title}</div>
               {toast.message && (
-                <div className="text-xs opacity-85 mt-0.5 break-words line-clamp-3">
+                <div className="text-[11px] text-[#8C9287] mt-0.5 break-words line-clamp-3">
                   {toast.message}
                 </div>
               )}
             </div>
             <button
               onClick={() => removeToast(toast.id)}
-              className="opacity-70 hover:opacity-100 p-1 rounded-lg transition-opacity"
+              className="text-[#8C9287] hover:text-[#E1E3DA] p-1 rounded-lg transition-colors cursor-pointer"
               aria-label="Закрыть"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         );

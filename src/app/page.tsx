@@ -10,7 +10,6 @@ import { SettingsModal } from '@/components/SettingsModal';
 import { TaskEditModal } from '@/components/TaskEditModal';
 import { ToastContainer } from '@/components/ToastContainer';
 import { Task } from '@/types/todo';
-import { Sparkles, Info, Heart } from 'lucide-react';
 
 function TodoAppContent() {
   const { viewMode } = useTodo();
@@ -36,21 +35,21 @@ function TodoAppContent() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t border-slate-200 dark:border-slate-800/80 py-4 px-4 text-center text-xs text-slate-500 dark:text-slate-400">
+      <footer className="w-full border-t border-[#222521] py-4 px-4 text-center text-xs text-[#8C9287] mt-8">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-purple-500" />
-            <span>Smart ToDoList с интеграцией Google Gemini API</span>
+          <div className="flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#7E9F74]" />
+            <span>SmartToDo • Пространство спокойного фокуса</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 text-xs">
             <button
               onClick={() => setIsSettingsOpen(true)}
-              className="hover:text-indigo-600 dark:hover:text-indigo-400 underline transition-colors"
+              className="hover:text-[#E1E3DA] transition-colors cursor-pointer"
             >
-              Настройки API-ключа
+              Настройки ключа
             </button>
             <span>•</span>
-            <span>Матрица Эйзенхауэра & AI Scoring</span>
+            <span>Матрица приоритетов</span>
           </div>
         </div>
       </footer>
