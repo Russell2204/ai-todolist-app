@@ -2,7 +2,8 @@
 
 Веб-приложение для управления задачами с **авторизацией через Neon Auth**, базой данных **Neon PostgreSQL**, фронтендом на **Vercel** и **AI-приоритезацией через Google Gemini API**.
 
-🌐 **Production URL:** [https://smart-ai-todolist.vercel.app](https://smart-ai-todolist.vercel.app)
+🌐 **Production URL:** [https://ai-todolist-app.vercel.app](https://ai-todolist-app.vercel.app)  
+📦 **GitHub Repository:** [https://github.com/Russell2204/ai-todolist-app](https://github.com/Russell2204/ai-todolist-app)
 
 ---
 
