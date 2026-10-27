@@ -24,15 +24,17 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
     dotColor: string;
     badgeBg: string;
     badgeText: string;
+    matrixClass: string;
   }> = [
     {
       id: 'DO_FIRST',
       title: 'Q1: Главный фокус',
       subtitle: 'Важно & Срочно',
       shortLabel: 'Q1 Фокус',
-      dotColor: 'bg-[#B86E53]',
-      badgeBg: 'bg-[#B86E53]/15',
-      badgeText: 'text-[#C27466]',
+      dotColor: 'bg-[#C06C53]',
+      badgeBg: 'bg-[#C06C53]/15',
+      badgeText: 'text-[#D47E66]',
+      matrixClass: 'matrix-q1',
     },
     {
       id: 'SCHEDULE',
@@ -42,24 +44,27 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
       dotColor: 'bg-[#7E9F74]',
       badgeBg: 'bg-[#7E9F74]/15',
       badgeText: 'text-[#7E9F74]',
+      matrixClass: 'matrix-q2',
     },
     {
       id: 'DELEGATE',
       title: 'Q3: Делегировать',
       subtitle: 'Не важно & Срочно',
       shortLabel: 'Q3 Делегировать',
-      dotColor: 'bg-[#D6A368]',
-      badgeBg: 'bg-[#D6A368]/15',
-      badgeText: 'text-[#D6A368]',
+      dotColor: 'bg-[#D8A562]',
+      badgeBg: 'bg-[#D8A562]/15',
+      badgeText: 'text-[#D8A562]',
+      matrixClass: 'matrix-q3',
     },
     {
       id: 'DELETE',
       title: 'Q4: Отпустить',
       subtitle: 'Не важно & Не срочно',
       shortLabel: 'Q4 Отпустить',
-      dotColor: 'bg-[#8C9287]',
-      badgeBg: 'bg-[#8C9287]/15',
-      badgeText: 'text-[#8C9287]',
+      dotColor: 'bg-[#8E948A]',
+      badgeBg: 'bg-[#8E948A]/15',
+      badgeText: 'text-[#8E948A]',
+      matrixClass: 'matrix-q4',
     },
   ];
 
@@ -85,16 +90,16 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
     return (
       <div
         key={q.id}
-        className="flex flex-col rounded-2xl border border-[#282C27] bg-[#1A1C1A] p-3.5 sm:p-4.5 shadow-sm transition-all"
+        className={`flex flex-col rounded-2xl p-4 sm:p-5 shadow-sm transition-all relative overflow-hidden ${q.matrixClass}`}
       >
         {/* Quadrant Header */}
-        <div className="flex items-center justify-between pb-2.5 border-b border-[#222521] mb-2.5">
-          <div className="flex items-center gap-2">
-            <span className={`w-2.5 h-2.5 rounded-full ${q.dotColor} shrink-0`} />
+        <div className="flex items-center justify-between pb-3 border-b border-[#262925] mb-3">
+          <div className="flex items-center gap-2.5">
+            <span className={`w-2.5 h-2.5 rounded-full ${q.dotColor} shrink-0 shadow-xs`} />
             <div>
               <div className="flex items-center gap-1.5">
-                <h3 className="font-semibold text-sm text-[#E1E3DA]">{q.title}</h3>
-                <span className="text-[11px] text-[#8C9287] hidden sm:inline">
+                <h3 className="font-semibold text-sm text-[#EDEFE8]">{q.title}</h3>
+                <span className="text-[11px] text-[#8E948A] hidden sm:inline">
                   • {q.subtitle}
                 </span>
               </div>
@@ -103,7 +108,7 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
 
           {/* Task Count Badge */}
           <span
-            className={`text-xs font-semibold px-2 py-0.5 rounded-md ${q.badgeBg} ${q.badgeText}`}
+            className={`text-xs font-semibold px-2.5 py-0.5 rounded-lg border border-white/5 ${q.badgeBg} ${q.badgeText}`}
           >
             {quadrantTasks.length}
           </span>
@@ -116,7 +121,7 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
               e.preventDefault();
               handleQuickAdd(q.id);
             }}
-            className="mb-2.5 flex items-center gap-1.5"
+            className="mb-3 flex items-center gap-1.5"
           >
             <input
               type="text"
@@ -124,11 +129,11 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
               onChange={(e) => setQuickAddTitle(e.target.value)}
               placeholder="Новая задача в этот квадрант..."
               autoFocus
-              className="flex-1 px-3 py-1.5 text-xs rounded-xl bg-[#141614] border border-[#282C27] text-[#E1E3DA] placeholder:text-[#585E54] focus:outline-none focus:border-[#7E9F74]"
+              className="flex-1 px-3 py-2 text-xs rounded-xl bg-[#141614] border border-[#262925] text-[#EDEFE8] placeholder:text-[#565C52] focus:outline-none focus:border-[#7E9F74]"
             />
             <button
               type="submit"
-              className="px-2.5 py-1.5 text-xs font-medium bg-[#7E9F74] text-[#111211] rounded-xl hover:bg-[#8EB382] cursor-pointer"
+              className="px-3 py-2 text-xs font-medium bg-[#7E9F74] text-[#111211] rounded-xl hover:bg-[#8EB382] cursor-pointer"
             >
               <Check className="w-3.5 h-3.5" />
             </button>
@@ -138,7 +143,7 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
                 setQuickAddQuadrant(null);
                 setQuickAddTitle('');
               }}
-              className="p-1.5 text-[#8C9287] hover:text-[#E1E3DA] rounded-lg cursor-pointer"
+              className="p-2 text-[#8E948A] hover:text-[#EDEFE8] rounded-lg cursor-pointer"
             >
               <X className="w-3.5 h-3.5" />
             </button>
@@ -147,7 +152,7 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
           <button
             type="button"
             onClick={() => setQuickAddQuadrant(q.id)}
-            className="mb-2.5 flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl border border-dashed border-[#282C27] hover:border-[#7E9F74]/50 text-[#8C9287] hover:text-[#E1E3DA] text-xs transition-colors cursor-pointer"
+            className="mb-3 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-dashed border-[#282C27] hover:border-[#7E9F74]/40 text-[#8E948A] hover:text-[#EDEFE8] text-xs transition-colors cursor-pointer"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Добавить задачу</span>
@@ -155,9 +160,9 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
         )}
 
         {/* Tasks List */}
-        <div className="space-y-2 flex-1 overflow-y-auto max-h-[460px] pr-0.5">
+        <div className="space-y-2.5 flex-1 overflow-y-auto max-h-[460px] pr-0.5">
           {quadrantTasks.length === 0 ? (
-            <div className="py-8 flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#242823] rounded-xl text-xs text-[#585E54]">
+            <div className="py-8 flex flex-col items-center justify-center text-center p-3 border border-dashed border-[#242823] rounded-xl text-xs text-[#565C52]">
               <span>Все дела решены</span>
             </div>
           ) : (
@@ -172,7 +177,7 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Mobile-Only Segmented Quadrant Tabs (Eliminates Nested Scroll Traps on < 768px) */}
+      {/* Mobile-Only Segmented Quadrant Tabs */}
       <div className="flex md:hidden items-center gap-1 overflow-x-auto pb-1 bg-[#141614] p-1.5 rounded-xl border border-[#222521]">
         {quadrantsConfig.map((q) => {
           const count = filteredTasks.filter((t) => t.quadrant === q.id).length;
@@ -183,10 +188,10 @@ export function EisenhowerMatrix({ onEditTask }: EisenhowerMatrixProps) {
               key={q.id}
               type="button"
               onClick={() => setActiveMobileQuadrant(q.id)}
-              className={`flex-1 min-w-[75px] py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+              className={`flex-1 min-w-[75px] py-2 px-2.5 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#232622] text-[#E1E3DA] shadow-xs'
-                  : 'text-[#8C9287] hover:text-[#E1E3DA]'
+                  ? 'bg-[#202320] text-[#EDEFE8] shadow-xs'
+                  : 'text-[#8E948A] hover:text-[#EDEFE8]'
               }`}
             >
               <span className={`w-1.5 h-1.5 rounded-full ${q.dotColor} shrink-0`} />

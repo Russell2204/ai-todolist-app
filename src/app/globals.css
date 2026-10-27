@@ -2,19 +2,19 @@
 
 @layer base {
   :root {
-    --canvas: #111211;
-    --surface: #1A1C1A;
-    --surface-elevated: #232622;
-    --border-subtle: #282C27;
-    --border-hover: #383F35;
+    --canvas: #0F1110;
+    --surface: #171917;
+    --surface-elevated: #202320;
+    --border-subtle: #262925;
+    --border-hover: #363C34;
     --border-focus: #7E9F74;
-    --text-primary: #E1E3DA;
-    --text-muted: #8C9287;
-    --text-ghost: #585E54;
+    --text-primary: #EDEFE8;
+    --text-muted: #8E948A;
+    --text-ghost: #565C52;
     --accent-sage: #7E9F74;
-    --accent-terracotta: #B86E53;
-    --accent-amber: #D6A368;
-    --accent-fjord: #7CA3AC;
+    --accent-terracotta: #C06C53;
+    --accent-amber: #D8A562;
+    --accent-fjord: #729EAA;
   }
 
   body {
@@ -23,11 +23,18 @@
     font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
+    /* Atmospheric ambient lighting across the canvas (Warm Sage & Deep Embers in corners) */
+    background-image: 
+      radial-gradient(ellipse 70% 45% at 50% -10%, rgba(126, 159, 116, 0.07), transparent 70%),
+      radial-gradient(circle 35% at 100% 15%, rgba(216, 165, 98, 0.03), transparent 60%),
+      radial-gradient(circle 40% at 0% 90%, rgba(192, 108, 83, 0.03), transparent 70%);
+    background-attachment: fixed;
   }
 }
 
 /* ========================================================
-   Nordic Sanctuary Component Primitives & Utilities
+   Nordic Sanctuary Specular & Tactile Utilities
    ======================================================== */
 
 /* Tactile Button Feedback (Cushion Press) */
@@ -43,104 +50,154 @@
   transform: scale(0.975);
 }
 
-/* Primary Action Button (Nordic Sage) */
+/* Primary Action Button (Nordic Sage with Specular Bevel) */
 .btn-primary {
   background-color: #7E9F74;
   color: #111211;
   font-weight: 500;
   border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transition: all 140ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover {
   background-color: #8EB382;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 12px rgba(126, 159, 116, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
 }
 
 .btn-primary:active {
   background-color: #6F8E66;
-  transform: scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
 
-/* Secondary Button (Dark Moss & Soft Border) */
+/* Secondary Button (Dark Moss & Specular Edge) */
 .btn-secondary {
-  background-color: #1A1C1A;
-  border: 1px solid #282C27;
-  color: #E1E3DA;
+  background-color: #171917;
+  border: 1px solid #262925;
+  color: #EDEFE8;
   border-radius: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
   transition: all 140ms ease;
 }
 
 .btn-secondary:hover {
-  background-color: #232622;
-  border-color: #383F35;
+  background-color: #202320;
+  border-color: #363C34;
   color: #FFFFFF;
 }
 
 .btn-secondary:active {
-  background-color: #181A18;
+  background-color: #141614;
   transform: scale(0.98);
 }
 
-/* Destructive Button (Muted Terracotta / Cedar) */
-.btn-destructive {
-  color: #C27466;
-  transition: all 140ms ease;
+/* Keyboard Keycap Pill (Raycast / Apple 3D Keycap style) */
+.keycap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8E948A;
+  background: linear-gradient(180deg, #242723 0%, #1A1C1A 100%);
+  border: 1px solid #31362E;
+  border-bottom: 2px solid #1E211D;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  padding: 1px 6px;
+  user-select: none;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
 }
 
-.btn-destructive:hover {
-  background-color: rgba(184, 110, 83, 0.12);
-  color: #E2887A;
-}
-
-.btn-destructive:active {
-  background-color: rgba(184, 110, 83, 0.22);
-  transform: scale(0.97);
+/* Frosted Glass Floating Panel */
+.glass-panel {
+  background: rgba(23, 25, 23, 0.78);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Standard Nordic Input & Focus Ring */
 .input-nordic {
-  background-color: #1A1C1A;
-  border: 1px solid #282C27;
-  color: #E1E3DA;
+  background-color: #141614;
+  border: 1px solid #262925;
+  color: #EDEFE8;
   border-radius: 12px;
   outline: none;
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .input-nordic::placeholder {
-  color: #8C9287;
+  color: #8E948A;
   opacity: 0.8;
 }
 
 .input-nordic:focus {
   border-color: #7E9F74;
-  box-shadow: 0 0 0 3px rgba(126, 159, 116, 0.22);
+  box-shadow: 0 0 0 3px rgba(126, 159, 116, 0.2);
 }
 
-/* Task Row Styling with GPU-accelerated specular highlight */
+/* Tactile Task Row with Ambient Edge and Specular Highlight */
 .task-row {
-  background-color: #1A1C1A;
-  border: 1px solid #282C27;
+  background: #171917;
+  border: 1px solid #262925;
   border-radius: 14px;
-  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms cubic-bezier(0.16, 1, 0.3, 1), opacity 200ms ease;
   transform: translateZ(0);
 }
 
 @media (hover: hover) {
   .task-row:hover {
     border-color: #383F35;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    transform: translateY(-1px);
+    box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-1.5px);
   }
+}
+
+/* Left Accent Edge Bars for Task Quadrants */
+.edge-bar-q1 {
+  border-left: 2.5px solid #C06C53 !important;
+}
+.edge-bar-q2 {
+  border-left: 2.5px solid #7E9F74 !important;
+}
+.edge-bar-q3 {
+  border-left: 2.5px solid #D8A562 !important;
+}
+.edge-bar-q4 {
+  border-left: 2.5px solid #565C52 !important;
+}
+
+/* Atmospheric Quadrant Cards in Matrix */
+.matrix-q1 {
+  background: radial-gradient(ellipse at 10% 10%, rgba(192, 108, 83, 0.06), transparent 70%), #171917;
+  border: 1px solid rgba(192, 108, 83, 0.2);
+}
+.matrix-q2 {
+  background: radial-gradient(ellipse at 10% 10%, rgba(126, 159, 116, 0.07), transparent 70%), #171917;
+  border: 1px solid rgba(126, 159, 116, 0.2);
+}
+.matrix-q3 {
+  background: radial-gradient(ellipse at 10% 10%, rgba(216, 165, 98, 0.06), transparent 70%), #171917;
+  border: 1px solid rgba(216, 165, 98, 0.2);
+}
+.matrix-q4 {
+  background: radial-gradient(ellipse at 10% 10%, rgba(142, 148, 138, 0.04), transparent 70%), #171917;
+  border: 1px solid rgba(86, 92, 82, 0.2);
 }
 
 /* Soft Motion: Organic Staggered Reveal */
 @keyframes gentleRise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
     filter: blur(2px);
   }
   to {
@@ -151,10 +208,10 @@
 }
 
 .animate-gentle-rise {
-  animation: gentleRise 340ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: gentleRise 300ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
-/* Accessibility: Full Respect for Reduced Motion */
+/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -168,7 +225,6 @@
   }
 }
 
-/* Manual Motion Reduction Class (toggled via settings) */
 .reduce-motion *,
 .reduce-motion *::before,
 .reduce-motion *::after {
@@ -189,9 +245,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #282C27;
+  background: #262925;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #383F35;
+  background: #363C34;
 }

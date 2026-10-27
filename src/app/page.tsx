@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { TodoProvider, useTodo } from '@/context/TodoContext';
 import { Header } from '@/components/Header';
+import { DayHeroHeader } from '@/components/DayHeroHeader';
 import { SmartTaskInput } from '@/components/SmartTaskInput';
 import { TaskList } from '@/components/TaskList';
 import { EisenhowerMatrix } from '@/components/EisenhowerMatrix';
@@ -23,6 +24,9 @@ function TodoAppContent() {
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-6">
+        {/* Day Hero Executive Header with Radial Ring */}
+        <DayHeroHeader />
+
         {/* Smart Input Bar with AI Auto-fill */}
         <SmartTaskInput />
 

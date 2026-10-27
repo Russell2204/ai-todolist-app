@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useTodo } from '@/context/TodoContext';
-import { Sparkles, Plus, Loader2, Calendar, Clock, ChevronDown, ChevronUp } from 'lucide-react';
+import { Sparkles, Plus, Loader2, Calendar, Clock, ChevronDown, ChevronUp, CornerDownLeft } from 'lucide-react';
 import { PriorityLevel, EisenhowerQuadrant } from '@/types/todo';
 
 export function SmartTaskInput() {
@@ -62,11 +62,11 @@ export function SmartTaskInput() {
   };
 
   return (
-    <div className="w-full bg-[#1A1C1A] rounded-2xl border border-[#282C27] shadow-sm p-2.5 sm:p-3.5 transition-all">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-        {/* Main Input Row */}
+    <div className="w-full glass-panel rounded-2xl p-2.5 sm:p-3.5 transition-all shadow-md">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
+        {/* Main Command Bar Row */}
         <div className="flex items-center gap-2">
-          <div className="relative flex-1">
+          <div className="relative flex-1 flex items-center">
             <input
               type="text"
               value={inputVal}
@@ -74,31 +74,40 @@ export function SmartTaskInput() {
               disabled={isParsingNLP}
               placeholder={
                 localAutoFill
-                  ? 'Что освободит вашу голову сегодня?..'
+                  ? 'Что нужно сделать? Напишите своими словами...'
                   : 'Запишите новую задачу...'
               }
-              className={`w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl bg-[#141614] border text-sm sm:text-base text-[#E1E3DA] placeholder:text-[#8C9287] focus:outline-none transition-all ${
+              className={`w-full pl-3.5 sm:pl-4 pr-16 sm:pr-24 py-2.5 sm:py-3 rounded-xl bg-[#141614]/90 border text-sm sm:text-base text-[#EDEFE8] placeholder:text-[#8E948A] focus:outline-none transition-all ${
                 isParsingNLP
-                  ? 'border-[#7CA3AC]/50 text-[#8C9287]'
-                  : 'border-[#282C27] focus:border-[#7E9F74] focus:ring-2 focus:ring-[#7E9F74]/20'
+                  ? 'border-[#729EAA]/50 text-[#8E948A]'
+                  : 'border-[#262925] focus:border-[#7E9F74] focus:ring-2 focus:ring-[#7E9F74]/20'
               }`}
             />
-            {isParsingNLP && (
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5 text-xs text-[#7CA3AC] font-medium">
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                <span className="hidden sm:inline">AI распределяет...</span>
-              </div>
-            )}
+
+            {/* In-bar status / Keycap */}
+            <div className="absolute right-2.5 flex items-center gap-1.5 pointer-events-none">
+              {isParsingNLP ? (
+                <div className="flex items-center gap-1.5 text-xs text-[#729EAA] font-medium pr-1">
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span className="hidden sm:inline">AI анализ...</span>
+                </div>
+              ) : (
+                <span className="keycap hidden sm:inline-flex items-center gap-1">
+                  <span>↵</span>
+                  <span>Enter</span>
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Add / Submit Button */}
+          {/* Add Button */}
           <button
             type="submit"
             disabled={!inputVal.trim() || isParsingNLP}
-            className={`flex items-center justify-center gap-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl font-medium text-xs sm:text-sm transition-all cursor-pointer ${
+            className={`btn-primary flex items-center justify-center gap-1 px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl font-medium text-xs sm:text-sm cursor-pointer ${
               !inputVal.trim() || isParsingNLP
-                ? 'bg-[#232622] text-[#585E54] cursor-not-allowed'
-                : 'bg-[#7E9F74] text-[#111211] hover:bg-[#8EB382] active:scale-95'
+                ? 'opacity-40 cursor-not-allowed !bg-[#202320] !text-[#565C52] !shadow-none'
+                : ''
             }`}
           >
             <Plus className="w-4 h-4" />
@@ -107,23 +116,23 @@ export function SmartTaskInput() {
         </div>
 
         {/* Action Bar: AI Auto-fill toggle & details */}
-        <div className="flex items-center justify-between text-xs text-[#8C9287] px-1">
+        <div className="flex items-center justify-between text-xs text-[#8E948A] px-1">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={toggleAutoFill}
               className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                 localAutoFill
-                  ? 'bg-[#1F2422] text-[#7CA3AC] border-[#2B3531]'
-                  : 'bg-transparent text-[#8C9287] border-[#282C27] hover:text-[#E1E3DA]'
+                  ? 'bg-[#1C221F] text-[#7E9F74] border-[#2E3B33] shadow-xs'
+                  : 'bg-transparent text-[#8E948A] border-[#262925] hover:text-[#EDEFE8]'
               }`}
               title="Автоматически определить дедлайн, приоритет и теги через AI"
             >
-              <Sparkles className="w-3 h-3 text-[#7CA3AC]" />
+              <Sparkles className="w-3 h-3 text-[#7E9F74]" />
               <span>AI авто-анализ</span>
               <span
                 className={`w-1.5 h-1.5 rounded-full ${
-                  localAutoFill ? 'bg-[#7CA3AC]' : 'bg-[#585E54]'
+                  localAutoFill ? 'bg-[#7E9F74]' : 'bg-[#565C52]'
                 }`}
               />
             </button>
@@ -132,29 +141,29 @@ export function SmartTaskInput() {
               <button
                 type="button"
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="flex items-center gap-1 text-xs text-[#8C9287] hover:text-[#E1E3DA] transition-colors cursor-pointer"
+                className="flex items-center gap-1 text-xs text-[#8E948A] hover:text-[#EDEFE8] transition-colors cursor-pointer"
               >
-                <span>Параметры</span>
+                <span>Уточнить параметры</span>
                 {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
               </button>
             )}
           </div>
 
-          <span className="text-[11px] text-[#585E54] hidden sm:inline">
-            Нажмите ↵ Enter для быстрого сохранения
-          </span>
+          <div className="flex items-center gap-2 text-[11px] text-[#565C52] hidden sm:flex">
+            <span>Распознает дату, время и теги (#работа)</span>
+          </div>
         </div>
 
         {/* Expandable Manual Parameters (Minimalist & Compact) */}
         {!localAutoFill && isExpanded && (
-          <div className="mt-2 pt-2.5 border-t border-[#222521] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-xs animate-gentle-rise">
+          <div className="mt-2 pt-2.5 border-t border-[#202320] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5 text-xs animate-gentle-rise">
             {/* Priority */}
             <div>
-              <label className="block text-[#8C9287] mb-1 font-medium text-[11px]">Приоритет</label>
+              <label className="block text-[#8E948A] mb-1 font-medium text-[11px]">Приоритет</label>
               <select
                 value={manualPriority}
                 onChange={(e) => setManualPriority(e.target.value as PriorityLevel)}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#282C27] text-[#E1E3DA] focus:outline-none focus:border-[#7E9F74]"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#262925] text-[#EDEFE8] focus:outline-none focus:border-[#7E9F74]"
               >
                 <option value="CRITICAL">Критический</option>
                 <option value="HIGH">Высокий</option>
@@ -165,11 +174,11 @@ export function SmartTaskInput() {
 
             {/* Quadrant */}
             <div>
-              <label className="block text-[#8C9287] mb-1 font-medium text-[11px]">Квадрант</label>
+              <label className="block text-[#8E948A] mb-1 font-medium text-[11px]">Квадрант</label>
               <select
                 value={manualQuadrant}
                 onChange={(e) => setManualQuadrant(e.target.value as EisenhowerQuadrant)}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#282C27] text-[#E1E3DA] focus:outline-none focus:border-[#7E9F74]"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#262925] text-[#EDEFE8] focus:outline-none focus:border-[#7E9F74]"
               >
                 <option value="DO_FIRST">Q1: Сделать первым</option>
                 <option value="SCHEDULE">Q2: Запланировать</option>
@@ -180,7 +189,7 @@ export function SmartTaskInput() {
 
             {/* Time */}
             <div>
-              <label className="block text-[#8C9287] mb-1 font-medium text-[11px] flex items-center gap-1">
+              <label className="block text-[#8E948A] mb-1 font-medium text-[11px] flex items-center gap-1">
                 <Clock className="w-3 h-3" /> Время (мин)
               </label>
               <input
@@ -189,38 +198,38 @@ export function SmartTaskInput() {
                 step="5"
                 value={manualMinutes}
                 onChange={(e) => setManualMinutes(Number(e.target.value))}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#282C27] text-[#E1E3DA] focus:outline-none focus:border-[#7E9F74]"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#262925] text-[#EDEFE8] focus:outline-none focus:border-[#7E9F74]"
               />
             </div>
 
             {/* Due Date */}
             <div>
-              <label className="block text-[#8C9287] mb-1 font-medium text-[11px] flex items-center gap-1">
+              <label className="block text-[#8E948A] mb-1 font-medium text-[11px] flex items-center gap-1">
                 <Calendar className="w-3 h-3" /> Дедлайн
               </label>
               <input
                 type="datetime-local"
                 value={manualDueDate}
                 onChange={(e) => setManualDueDate(e.target.value)}
-                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#282C27] text-[#E1E3DA] focus:outline-none focus:border-[#7E9F74]"
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#262925] text-[#EDEFE8] focus:outline-none focus:border-[#7E9F74]"
               />
             </div>
 
             {/* Tags Input */}
             <div className="sm:col-span-2 md:col-span-4">
-              <label className="block text-[#8C9287] mb-1 font-medium text-[11px]">
+              <label className="block text-[#8E948A] mb-1 font-medium text-[11px]">
                 Теги (через запятую)
               </label>
               <input
                 type="text"
                 value={manualTagInput}
                 onChange={(e) => setManualTagInput(e.target.value)}
-                placeholder="работа, дом, здоровье..."
-                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#282C27] text-[#E1E3DA] placeholder:text-[#585E54] focus:outline-none focus:border-[#7E9F74]"
+                placeholder="работа, проект, дом..."
+                className="w-full px-2.5 py-1.5 rounded-lg bg-[#141614] border border-[#262925] text-[#EDEFE8] placeholder:text-[#565C52] focus:outline-none focus:border-[#7E9F74]"
               />
               {allTags.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-1.5">
-                  <span className="text-[11px] text-[#585E54] mr-1 self-center">Быстрые:</span>
+                  <span className="text-[11px] text-[#565C52] mr-1 self-center">Быстрые:</span>
                   {allTags.slice(0, 6).map((tag) => (
                     <button
                       key={tag}
@@ -231,7 +240,7 @@ export function SmartTaskInput() {
                           setManualTagInput([...current, tag].join(', '));
                         }
                       }}
-                      className="text-[11px] px-2 py-0.5 rounded-md bg-[#141614] border border-[#222521] text-[#8C9287] hover:text-[#E1E3DA] transition-colors"
+                      className="text-[11px] px-2 py-0.5 rounded-md bg-[#141614] border border-[#202320] text-[#8E948A] hover:text-[#EDEFE8] transition-colors cursor-pointer"
                     >
                       #{tag}
                     </button>
